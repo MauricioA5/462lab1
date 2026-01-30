@@ -81,35 +81,29 @@ class BUTTON:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     def IS_PRESSED(self):
         return GPIO.input(self.pin) == GPIO.HIGH
-    
+
+
 # Hardware Components
 LED1 = LED([17,27,22])
 LED2 = LED([23,24,25])
 DISPLAY = SEG_DISPLAY([6,13,19,26,16,20,21])
-PRESS = BUTTON(12)
+GATE = BUTTON(12)
+
+def TRAFFIC(channel):
+    global cooldown_time
+    if not (time.time() < cooldown_time):
+        cooldown_time = time.time() + 20
+        #4b
+        LED2.flash("B", 3,0.5)
+        LED2.set("R")
+        #4c
+        LED1.set("G")
+        #4d
+        DISPLAY.countdown(LED1)
+        #4e
+        LED1.set("R")
+        LED2.set("G") #4a
+    
+    
 
 cooldown_time = 0
-
-
-LED2.set("G")
-try:
-    while(True):
-        time.sleep(0.01)
-        if time.time() < cooldown_time:
-                continue
-        if(PRESS.IS_PRESSED()):
-            # Set Cooldown (4f)
-            cooldown_time = time.time() + 20
-            #4b
-            LED2.flash("B", 3,0.5)
-            LED2.set("R")
-            #4c
-            LED1.set("G")
-            #4d
-            DISPLAY.countdown(LED1)
-            #4e
-            LED1.set("R")
-            LED2.set("G") #4a
-except KeyboardInterrupt:
-    GPIO.cleanup()
-
