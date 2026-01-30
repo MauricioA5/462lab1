@@ -4,7 +4,7 @@ if __name__ == "__main__":
     try:
         LED2.set("G")
         GPIO.add_event_detect(GATE.pin, GPIO.FALLING, bouncetime=200)
-        GPIO.add_event_callback(GATE.pin, GPIO.FALLING, callback=TRAFFIC)
+        GPIO.add_event_callback(GATE.pin,callback=TRAFFIC)
         while True:
             time.sleep(1)
     except KeyboardInterrupt:

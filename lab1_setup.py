@@ -88,10 +88,11 @@ LED1 = LED([17,27,22])
 LED2 = LED([23,24,25])
 DISPLAY = SEG_DISPLAY([6,13,19,26,16,20,21])
 GATE = BUTTON(12)
+cooldown_time = 0
 
-def TRAFFIC(channel):
+def TRAFFIC(channel=None):
     global cooldown_time
-    if not (time.time() < cooldown_time):
+    if time.time() > cooldown_time:
         cooldown_time = time.time() + 20
         #4b
         LED2.flash("B", 3,0.5)
@@ -106,4 +107,3 @@ def TRAFFIC(channel):
     
     
 
-cooldown_time = 0
